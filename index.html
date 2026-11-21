@@ -51,7 +51,7 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
  #catalogScreen{top:calc(58px + env(safe-area-inset-top))!important;bottom:calc(65px + env(safe-area-inset-bottom))!important;overflow-y:auto;-webkit-overflow-scrolling:touch}
 }
 @media(max-width:390px){nav button{font-size:9px;padding:6px 1px}header h1{font-size:17px}}
-.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v3.9.6</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v3.9.8</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
 function verasetasLeafletFailed(){
  const msg=document.createElement('div');
  msg.id='mapLoadError';
@@ -287,7 +287,7 @@ loadGrid=async function(){
  }
 };
 
-loadGrid();
+loadGrid().finally(()=>{const el=document.getElementById('healthText');if(el)el.textContent='Clima: '+gridLoaded+'/'+gridCells.length+' casillas · '+(gridErrorCount?'errores: '+gridErrorCount:'carga finalizada')});
 // Puente explícito: los scripts posteriores no pueden ver funciones declaradas dentro del bloque if en Safari.
 window.vsLoadForests=()=>loadForests();
 
@@ -1269,18 +1269,21 @@ if(location.protocol!=='file:')loadProcessedSources();
   // Capture the computed colors from the original 64 cells, then replace their
   // rectangles with smaller clickable visual tiles. No extra API requests.
   const originals=gridLayer.getLayers().filter(x=>x instanceof L.Rectangle);
-  const colors=originals.map(x=>x.options.fillColor);
+  // Compute colors from each cell's actual meteorological score, never from layer order.
+  const colors=gridCells.map(c=>markerColor(gridScore(c)));
   for(const layer of originals)gridLayer.removeLayer(layer);
   for(let i=0;i<gridCells.length;i++){
    const c=gridCells[i],b=c.bounds,dy=(b[1][0]-b[0][0])/divisions,dx=(b[1][1]-b[0][1])/divisions;
-   const color=colors[i]||'#76847c';
+   const color=colors[i];
    for(let y=0;y<divisions;y++)for(let x=0;x<divisions;x++){
     const south=b[0][0]+y*dy,west=b[0][1]+x*dx;
-    const rect=L.rectangle([[south,west],[south+dy,west+dx]],{color:'#152b22',weight:.5,fillColor:color,fillOpacity:.49,interactive:true});
+    const rect=L.rectangle([[south,west],[south+dy,west+dx]],{color:'#152b22',weight:.5,fillColor:color,fillOpacity:color==='#8c9b95'?.20:.67,interactive:true});
     rect.on('click',()=>showGridDetail(south+dy/2,west+dx/2));rect.addTo(gridLayer);
    }
   }
-  const legend=document.getElementById('legend');if(legend)legend.innerHTML+=' · Casillas visuales ~'+(divisions===2?'4–6':divisions===4?'2–3':'1–1,5')+' km, <b>datos meteorológicos originales ~8–12 km repetidos</b> (sin precisión adicional)';
+  const missing=gridCells.filter(c=>gridScore(c)===null).length;
+  const legend=document.getElementById('legend');if(legend&&missing)legend.innerHTML+=' · ⚠ '+missing+' casillas sin índice (lluvia/temperatura/altitud incompletas)';
+  if(legend)legend.innerHTML+=' · Casillas visuales ~'+(divisions===2?'4–6':divisions===4?'2–3':'1–1,5')+' km, <b>datos meteorológicos originales ~8–12 km repetidos</b> (sin precisión adicional)';
  };
  const oldDetail=showGridDetail;
  showGridDetail=function(lat,lon){oldDetail(lat,lon);if(tab!=='pred'||divisions===1)return;
