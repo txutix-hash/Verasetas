@@ -51,7 +51,7 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
  #catalogScreen{top:calc(58px + env(safe-area-inset-top))!important;bottom:calc(65px + env(safe-area-inset-bottom))!important;overflow-y:auto;-webkit-overflow-scrolling:touch}
 }
 @media(max-width:390px){nav button{font-size:9px;padding:6px 1px}header h1{font-size:17px}}
-.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v3.9.4</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v3.9.5</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
 function verasetasLeafletFailed(){
  const msg=document.createElement('div');
  msg.id='mapLoadError';
@@ -209,6 +209,83 @@ const oldFetchGrid=fetchGrid;
 fetchGrid=async function(c){const u=new URL('https://api.open-meteo.com/v1/forecast');Object.entries({latitude:c.t[1],longitude:c.t[2],daily:'temperature_2m_max,temperature_2m_min,temperature_2m_mean,precipitation_sum,wind_speed_10m_mean,wind_speed_10m_max',hourly:'relative_humidity_2m',timezone:'Europe/Madrid',past_days:61,forecast_days:15}).forEach(([k,v])=>u.searchParams.set(k,v));const response=await fetch(u,{signal:AbortSignal.timeout(22000)});if(!response.ok)throw Error('HTTP '+response.status);const raw=await response.json(),d=raw.daily,idx=d.time.indexOf(dateKey());if(idx<0)throw Error('Fecha ausente');c.t[3]=Number.isFinite(raw.elevation)?raw.elevation:null;const hums=raw.hourly?.relative_humidity_2m||[];const series=d.time.map((date,i)=>{const hh=hums.slice(i*24,(i+1)*24).filter(Number.isFinite);return {date,rain:d.precipitation_sum[i],temp:d.temperature_2m_mean?.[i],wind:d.wind_speed_10m_mean?.[i],windMax:d.wind_speed_10m_max?.[i],hum:hh.length?hh.reduce((a,b)=>a+b,0)/hh.length:null}});exploreSeries.set(c.id,series);rainHistory.set(c.t[0],new Map(series.map(x=>[x.date,x.rain])));weather.set(c.t[0],d.time.slice(idx,idx+15).map((_,j)=>{const i=idx+j;return {min:d.temperature_2m_min[i],max:d.temperature_2m_max[i],rain:d.precipitation_sum[i],wind:d.wind_speed_10m_max?.[i],hum:series[i].hum}}));c.ready=true;gridLoaded++};
 const oldGridDetail=showGridDetail;
 showGridDetail=function(lat,lon){oldGridDetail(lat,lon);if(tab!=='explore')return;const c=cellFor(lat,lon),r=evaluateExplore(c),block=document.createElement('div');block.className='card';block.innerHTML=r?`<b>Explora · ${r.pass?'CUMPLE':'NO CUMPLE'}</b><p>Lluvia: ${r.rain.toFixed(1)} mm · Días de viento: ${r.wind}<br>Temperatura media diaria: ${r.minTemp.toFixed(1)} a ${r.maxTemp.toFixed(1)} °C<br>Día más seco (humedad media): ${r.minHum.toFixed(1)} %</p>`:'<b>Explora · DATOS INSUFICIENTES</b><p>No se puede evaluar toda la ventana seleccionada.</p>';$('detail').appendChild(block)};
+
+
+/* v3.9.5: descarga agrupada, menos peticiones a Open-Meteo.
+   No se inventan valores si el proveedor no responde. */
+let vsGridLastError='';
+function vsApplyGridWeather(c,raw){
+ const d=raw?.daily;
+ if(!Array.isArray(d?.time))throw Error('Respuesta sin serie diaria');
+ const idx=d.time.indexOf(dateKey());
+ if(idx<0)throw Error('Fecha '+dateKey()+' ausente');
+ const elev=Number(raw.elevation);
+ c.t[3]=Number.isFinite(elev)?elev:null;
+ const hums=raw.hourly?.relative_humidity_2m||[];
+ const series=d.time.map((date,i)=>{
+  const hh=hums.slice(i*24,(i+1)*24).filter(Number.isFinite);
+  return {date,rain:d.precipitation_sum?.[i],temp:d.temperature_2m_mean?.[i],
+   wind:d.wind_speed_10m_mean?.[i],windMax:d.wind_speed_10m_max?.[i],
+   hum:hh.length?hh.reduce((a,b)=>a+b,0)/hh.length:null};
+ });
+ exploreSeries.set(c.id,series);
+ rainHistory.set(c.t[0],new Map(series.map(x=>[x.date,x.rain])));
+ weather.set(c.t[0],d.time.slice(idx,idx+15).map((_,j)=>{
+  const i=idx+j;return {min:d.temperature_2m_min?.[i],max:d.temperature_2m_max?.[i],
+   rain:d.precipitation_sum?.[i],wind:d.wind_speed_10m_max?.[i],hum:series[i].hum};
+ }));
+ if(!c.ready){c.ready=true;gridLoaded++}
+}
+async function vsFetchBatch(cells){
+ const u=new URL('https://api.open-meteo.com/v1/forecast');
+ Object.entries({latitude:cells.map(c=>c.t[1]).join(','),
+ longitude:cells.map(c=>c.t[2]).join(','),
+ daily:'temperature_2m_max,temperature_2m_min,temperature_2m_mean,precipitation_sum,wind_speed_10m_mean,wind_speed_10m_max',
+ hourly:'relative_humidity_2m',timezone:'Europe/Madrid',past_days:61,forecast_days:15})
+ .forEach(([k,v])=>u.searchParams.set(k,v));
+ const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),30000);
+ try{
+  const response=await fetch(u,{signal:controller.signal});
+  if(!response.ok){let detail='';try{detail=(await response.json()).reason||''}catch{}
+   throw Error('Open-Meteo HTTP '+response.status+(detail?': '+detail:''))}
+  const json=await response.json(),results=Array.isArray(json)?json:[json];
+  if(results.length!==cells.length)throw Error('Cantidad de localidades inesperada');
+  results.forEach((raw,i)=>vsApplyGridWeather(cells[i],raw));
+ }finally{clearTimeout(timeout)}
+}
+fetchGrid=async function(c){await vsFetchBatch([c])};
+loadGrid=async function(){
+ if(gridBusy)return;
+ gridBusy=true;gridErrorCount=0;vsGridLastError='';
+ const pending=gridCells.filter(c=>!c.ready);
+ const batches=[];for(let i=0;i<pending.length;i+=8)batches.push(pending.slice(i,i+8));
+ let cursor=0;
+ async function worker(){
+  while(cursor<batches.length){
+   const batch=batches[cursor++];
+   try{await vsFetchBatch(batch)}
+   catch(e){
+    vsGridLastError=String(e.message||e);console.warn('Lote Open-Meteo',e);
+    // Recuperación individual: un fallo del lote no inutiliza todo el mapa.
+    for(const c of batch){
+     try{await vsFetchBatch([c])}catch(err){
+      gridErrorCount++;vsGridLastError=String(err.message||err);
+      console.warn('Cuadrícula '+c.id,err);
+     }
+    }
+   }
+   gridDraw();
+  }
+ }
+ try{await Promise.all([worker(),worker()])}
+ finally{
+  gridBusy=false;gridDraw();
+  if(gridErrorCount){
+   const legend=document.getElementById('legend');
+   if(legend)legend.textContent+=' · '+gridErrorCount+' sin datos ('+vsGridLastError.slice(0,110)+')';
+  }
+ }
+};
 
 loadGrid();
 // Puente explícito: los scripts posteriores no pueden ver funciones declaradas dentro del bloque if en Safari.
