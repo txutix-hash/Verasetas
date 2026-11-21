@@ -1253,4 +1253,51 @@ if(location.protocol!=='file:')loadProcessedSources();
  update();
 })();
 </script>
+
+<script>
+/* v3.9.2: OSM forest query with visible progress, zoom guidance, endpoint fallback. */
+(function(){
+ if(typeof map==='undefined'||typeof gridDraw!=='function')return;
+ const servers=['https://overpass.kumi.systems/api/interpreter','https://overpass-api.de/api/interpreter','https://overpass.nchc.org.tw/api/interpreter'];
+ let running=false;
+ function report(msg){forestStatus=msg;for(const id of ['vsForestPredStatus','forestStatus']){const el=document.getElementById(id);if(el)el.textContent=msg}}
+ function timeoutSignal(ms){const c=new AbortController();const timer=setTimeout(()=>c.abort(),ms);return {signal:c.signal,stop:()=>clearTimeout(timer)}}
+ async function queryForest(){
+   const b=map.getBounds(),zoom=map.getZoom();
+   if(zoom<11){report('⚠️ Mapa demasiado alejado (zoom '+zoom+'). Acerca hasta zoom 11 o más y vuelve a pulsar.');return false}
+   const bounds=[b.getSouth(),b.getWest(),b.getNorth(),b.getEast()].map(n=>n.toFixed(5)).join(',');
+   const q='[out:json][timeout:25];(way["landuse"="forest"]('+bounds+');way["natural"="wood"]('+bounds+'););out geom;';
+   let response=null,lastError=null;
+   for(let i=0;i<servers.length;i++){
+     report('🌳 Consultando bosques OSM… servidor '+(i+1)+' de '+servers.length);
+     const t=timeoutSignal(18000);
+     try{const r=await fetch(servers[i],{method:'POST',body:new URLSearchParams({data:q}),signal:t.signal});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!Array.isArray(data.elements))throw Error('Respuesta sin elementos');response=data;break}catch(e){lastError=e;console.warn('VeraSetas OSM',servers[i],e)}finally{t.stop()}
+   }
+   if(!response){report('❌ No se pudo conectar con los servidores de bosques OSM. Reintenta más tarde. '+(lastError?.message||''));return false}
+   const features=[];
+   for(const el of response.elements){
+     if(features.length>=2500)break;
+     const coords=el.geometry;
+     if(!Array.isArray(coords)||coords.length<4)continue;
+     if(coords[0].lat!==coords[coords.length-1].lat||coords[0].lon!==coords[coords.length-1].lon)continue;
+     const tags=el.tags||{};
+     features.push({type:'Feature',properties:{kind:forestKind(tags),detail:Object.entries(tags).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[coords.map(c=>[c.lon,c.lat])]}});
+   }
+   forestData={type:'FeatureCollection',features};
+   report('✅ '+features.length+' polígonos forestales cargados. '+(features.length?'Índice recalculado.':'No hay polígonos cerrados en esta vista; prueba otra zona.'));
+   if(typeof renderForests==='function')renderForests();
+   gridDraw();
+   return true;
+ }
+ document.addEventListener('click',async e=>{
+   const btn=e.target?.closest?.('#vsForestPred');
+   if(!btn)return;
+   e.stopImmediatePropagation();e.preventDefault();
+   if(running)return;
+   running=true;btn.disabled=true;btn.textContent='🌳 Consultando bosques…';
+   report('🌳 Botón activado. Comprobando zoom…');
+   try{await queryForest()}catch(err){report('❌ Error al procesar bosques: '+(err?.message||'desconocido'));console.error(err)}finally{running=false;btn.disabled=false;btn.textContent='🌳 Cruzar con bosques OSM visibles'}
+ },true);
+})();
+</script>
 </body></html>
