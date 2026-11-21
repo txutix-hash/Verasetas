@@ -51,7 +51,7 @@ html,body{height:100%;overscroll-behavior:none}button,select,input{touch-action:
  #catalogScreen{top:calc(58px + env(safe-area-inset-top))!important;bottom:calc(65px + env(safe-area-inset-bottom))!important;overflow-y:auto;-webkit-overflow-scrolling:touch}
 }
 @media(max-width:390px){nav button{font-size:9px;padding:6px 1px}header h1{font-size:17px}}
-.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v3.9.1</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
+.area-picker{position:absolute;z-index:700;top:12px;right:12px;background:#143a2beF;border:1px solid #64866e;border-radius:12px;padding:6px 9px;max-width:160px}.area-picker label{font-size:10px;display:block;color:#c8decf}.area-picker select{font-size:13px;padding:6px;background:#173529;color:white;max-width:140px}@media(max-width:760px){.area-picker{top:10px;right:9px;max-width:140px}.area-picker select{max-width:120px}.legend{top:94px!important}} </style></head><body><header><div><h1>🍄 VeraSetas <small>v3.9</small></h1><small>La Vera · Gargüera · Cáceres</small></div><button id="userMenu" title="Información">☰</button></header><nav id="tabs"><button data-tab="pred" class="active">Predicción</button><button data-tab="explore">Explora</button><button data-tab="spots">Setales</button><button data-tab="climate">Clima</button><button data-tab="flora">Flora</button><button data-tab="catalog">Catálogo</button></nav><div class="overlay" id="overlay"></div><div id="workspace"><aside id="panel"><div class="row"><h2 id="panelTitle">Predicción</h2><button id="closePanel" style="flex:0 0 auto">✕</button></div><div id="panelBody"></div></aside><div id="mapWrap"><div id="map"></div><button class="floating" id="filters" aria-label="Abrir filtros">☷</button><div class="area-picker"><label for="areaSelect">Zona del mapa</label><select id="areaSelect" aria-label="Ir a zona"><option value="vera">La Vera</option><option value="garguera">Gargüera</option><option value="caceres">Cáceres</option><option value="todo">Toda la zona</option></select></div><div class="legend" id="legend"></div><div id="detail" class="hidden"></div><div class="mapbuttons"><button id="locate" title="Mi posición">◎</button><button id="layersBtn" title="Capas base">▧</button><button id="zoomIn" title="Acercar">+</button><button id="zoomOut" title="Alejar">−</button></div><div class="layers hidden" id="layers"><button class="close" id="closeLayers">✕</button><strong>Mapa base</strong><label><input type="radio" name="base" value="light" checked> Claro</label><label><input type="radio" name="base" value="sat"> Satélite</label><label><input type="radio" name="base" value="topo"> Topográfico</label><label><input type="checkbox" id="relief"> Relieve sombreado</label><label><input type="checkbox" id="trailsToggle"> Caminos y senderos OSM</label><button id="detailRefresh" type="button">Actualizar detalle visible</button><small id="detailStatus" class="muted">Acerca el mapa (zoom 12+) y activa caminos. Los datos son parciales.</small></div></div></div><script>
 function verasetasLeafletFailed(){
  const msg=document.createElement('div');
  msg.id='mapLoadError';
@@ -73,7 +73,7 @@ const species=[{name:'Boletus edulis',short:'B. edulis',hab:'Robledales, castañ
 {name:'Cyclocybe aegerita',short:'Seta de chopo',hab:'Riberas con chopos, álamos y madera de frondosas; requiere hospedador adecuado',months:'Primavera y otoño, con humedad',min:150,max:1200,rain:14,temp:17},
 {name:'Craterellus cornucopioides',short:'Trompeta de los muertos',hab:'Robledales y castañares frescos y húmedos',months:'Otoño–principios de invierno',min:400,max:1500,rain:19,temp:13}];
 let tab='pred',selected=0,dateOffset=0,weather=new Map(),layersOverlay=L.layerGroup(),markers=L.layerGroup(),chosen=null,spots=[],watchId=null,following=false,geoMarker=null,geoAccuracy=null,weatherError='',rainHistory=new Map(),rainWindow=15;try{spots=JSON.parse(localStorage.getItem('verasetas_spots_v02')||localStorage.getItem('verasetas_spots')||'[]')}catch{}if(!Array.isArray(spots))spots=[];
-const map=L.map('map',{zoomControl:false}).setView([40.09,-5.70],11);const bases={light:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}),sat:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery © Esri',maxZoom:18}),topo:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'© OpenTopoMap © OpenStreetMap contributors',maxZoom:17})};let base=bases.light;base.addTo(map);
+const map=L.map('map',{zoomControl:false}).setView([40.09,-5.70],11);window.vsLeafletMap=map;const bases={light:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}),sat:L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery © Esri',maxZoom:18}),topo:L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'© OpenTopoMap © OpenStreetMap contributors',maxZoom:17})};let base=bases.light;base.addTo(map);
 const areaViews={vera:{center:[40.09,-5.70],zoom:11},garguera:{center:[40.061256,-5.927652],zoom:12},caceres:{center:[39.4765,-6.3722],zoom:12}};
 $('areaSelect').addEventListener('change',e=>{const v=e.target.value;if(v==='todo')map.fitBounds([[39.42,-6.43],[40.20,-5.34]],{padding:[15,15]});else{const a=areaViews[v];if(a)map.setView(a.center,a.zoom)}});
 let tileFailures=0,tileSuccesses=0;
@@ -99,7 +99,32 @@ const limit=(id,fallback)=>$(id)?+$(id).value:fallback,climateVar=$('climateVar'
 function forestKind(tags){const v=[tags.species,tags['species:es'],tags.genus,tags['genus:es'],tags.name,tags['leaf_type']].filter(Boolean).join(' ').toLowerCase();if(/quercus pyrenaica|quercus robur|roble|robled/.test(v))return 'roble';if(/castanea|castaño|castan/.test(v))return 'castano';if(/pinus|pino|pinar/.test(v))return 'pino';if(/quercus ilex|encina|encinar/.test(v))return 'encina';return 'otro'}
 function forestColor(k){return {roble:'#54b46b',castano:'#e7a257',pino:'#61a5d7',encina:'#9caa52',otro:'#a1a9a1'}[k]||'#a1a9a1'}
 function renderForests(){forestLayer.clearLayers();if(tab!=='flora'){if(map.hasLayer(forestLayer))map.removeLayer(forestLayer);return}if(!map.hasLayer(forestLayer))forestLayer.addTo(map);if(forestData)forestLayer.addData({type:'FeatureCollection',features:forestData.features.filter(f=>forestFilter==='all'||f.properties.kind===forestFilter)});forestLayer.bringToFront()}
-async function loadForests(){forestStatus='Consultando polígonos forestales de OpenStreetMap…';if($('forestStatus'))$('forestStatus').textContent=forestStatus;const b=map.getBounds(),ss=b.getSouth().toFixed(5),ww=b.getWest().toFixed(5),nn=b.getNorth().toFixed(5),ee=b.getEast().toFixed(5);if(map.getZoom()<11){forestStatus="Acerca el mapa a zoom 11 o más para consultar bosques de la zona visible.";if($("forestStatus"))$("forestStatus").textContent=forestStatus;return}const query=`[out:json][timeout:35];(way["landuse"="forest"](${ss},${ww},${nn},${ee});way["natural"="wood"](${ss},${ww},${nn},${ee}););out geom;`;try{const r=await fetch('https://overpass.kumi.systems/api/interpreter',{method:'POST',body:new URLSearchParams({data:query}),signal:AbortSignal.timeout(60000)});if(!r.ok)throw Error('Servidor OSM '+r.status);const d=await r.json();const features=d.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry.at(-1).lat&&x.geometry[0].lon===x.geometry.at(-1).lon).slice(0,2500).map(x=>({type:'Feature',properties:{kind:forestKind(x.tags||{}),detail:Object.entries(x.tags||{}).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}}));forestData={type:'FeatureCollection',features};forestStatus=features.length+' polígonos forestales cargados (OSM, cobertura parcial).';renderForests();renderMap()}catch(e){forestStatus='No se pudo cargar la capa forestal. Comprueba la conexión o inténtalo más tarde.';console.warn(e)}if($('forestStatus'))$('forestStatus').textContent=forestStatus}
+async function loadForests(){
+ const statusEl=()=>document.getElementById('vsForestPredStatus')||document.getElementById('forestStatus');
+ const report=msg=>{forestStatus=msg;const el=statusEl();if(el)el.textContent=msg};
+ const leafletMap=window.vsLeafletMap;
+ if(!leafletMap||typeof leafletMap.getBounds!=='function'){report('❌ No se ha inicializado el mapa Leaflet. Recarga VeraSetas e inténtalo de nuevo.');return false}
+ if(leafletMap.getZoom()<11){report('🔎 Acerca el mapa hasta zoom 11 o superior y vuelve a pulsar.');return false}
+ const bounds=leafletMap.getBounds();
+ const bbox=[bounds.getSouth(),bounds.getWest(),bounds.getNorth(),bounds.getEast()].map(v=>v.toFixed(5)).join(',');
+ if(bounds.getNorth()-bounds.getSouth()>0.30||bounds.getEast()-bounds.getWest()>0.40){report('🔎 La zona visible es demasiado grande. Acerca más el mapa.');return false}
+ report('⏳ Consultando bosques de OpenStreetMap…');
+ const query=`[out:json][timeout:30];(way["landuse"="forest"](${bbox});way["natural"="wood"](${bbox}););out geom;`;
+ const servers=['https://overpass.kumi.systems/api/interpreter','https://overpass-api.de/api/interpreter','https://overpass.nchc.org.tw/api/interpreter'];
+ let data=null,lastError=null;
+ for(const url of servers){
+  try{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),25000);
+   let response;try{response=await fetch(url,{method:'POST',body:new URLSearchParams({data:query}),signal:controller.signal})}finally{clearTimeout(timeout)}
+   if(!response.ok)throw Error('HTTP '+response.status);data=await response.json();if(!Array.isArray(data.elements))throw Error('Respuesta inválida');break
+  }catch(err){lastError=err;console.warn('OSM Overpass',url,err)}
+ }
+ if(!data){report('❌ No se pudieron consultar bosques OSM. Comprueba Internet o prueba más tarde.');return false}
+ const features=data.elements.filter(x=>x.geometry?.length>=4&&x.geometry[0].lat===x.geometry[x.geometry.length-1].lat&&x.geometry[0].lon===x.geometry[x.geometry.length-1].lon).slice(0,2500).map(x=>({type:'Feature',properties:{kind:forestKind(x.tags||{}),detail:Object.entries(x.tags||{}).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[x.geometry.map(c=>[c.lon,c.lat])]}}));
+ forestData={type:'FeatureCollection',features};
+ renderForests();renderMap();
+ report('✅ '+features.length+' polígonos forestales cargados (OSM, cobertura parcial). '+(features.length?'Índice actualizado.':'No se encontraron polígonos cerrados en esta vista.'));
+ return true;
+}
 function showDetail(t,i){const d=daily(t),sc=score(t,d);$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>${esc(t[0])}</b><div class="notice">Altitud del núcleo: ~${t[3]} m<br>${d?`🌡️ ${number(d.min)}–${number(d.max)} °C · 🌧️ ${number(d.rain)} mm<br>💧 ${number(d.hum)} % · 💨 ${number(d.wind)} km/h`:'Sin datos meteorológicos disponibles'}<br>${tab==='pred'&&sc!=null?'Índice experimental: '+sc+'/100 · lluvia previa '+rainWindow+' días: '+number(rainBefore(t))+' mm':''}</div><button id="saveHere">Guardar como setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{const name=prompt('Nombre del setal',t[0]);if(name)saveSpot(name.trim(),t[1],t[2])}}function detailSpot(i){const s=spots[i];$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>${esc(s.name)}</b><p class="notice">${(+s.lat).toFixed(5)}, ${(+s.lon).toFixed(5)}<br>Setal privado guardado en el navegador.</p><button id="deleteSpot">Eliminar</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('deleteSpot').onclick=()=>{if(confirm('¿Eliminar este setal?')){spots.splice(i,1);persist();renderMap();renderPanel();$('detail').classList.add('hidden')}}}map.on('click',e=>{if(tab==='catalog')return;chosen=e.latlng;$('detail').classList.remove('hidden');$('detail').innerHTML=`<button id="hideDetail">✕</button><b>Punto del mapa</b><p class="notice">${chosen.lat.toFixed(5)}, ${chosen.lng.toFixed(5)}<br>Sin pronóstico puntual calculado en esta versión.</p><button id="saveHere">Guardar setal</button>`;$('hideDetail').onclick=()=>$('detail').classList.add('hidden');$('saveHere').onclick=()=>{let n=prompt('Nombre del setal','Nuevo setal');if(n)saveSpot(n.trim(),chosen.lat,chosen.lng)}});
 function persist(){localStorage.setItem('verasetas_spots_v02',JSON.stringify(spots))}function saveSpot(name,lat,lon){if(!name)return;spots.push({name,lat:+lat,lon:+lon});persist();renderMap();if(tab==='spots')renderPanel();alert('Setal guardado en este navegador')}function renderSpots(){if(!$('spotList'))return;$('spotList').innerHTML=spots.length?spots.map((s,i)=>`<div class="spot"><b>${esc(s.name)}</b><p class="muted">${(+s.lat).toFixed(5)}, ${(+s.lon).toFixed(5)}</p><button data-view="${i}">Ver mapa</button><button data-delete="${i}">Eliminar</button></div>`).join(''):'Aún no hay setales.';$('spotList').querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{let s=spots[+b.dataset.view];map.setView([s.lat,s.lon],14);detailSpot(+b.dataset.view);closePanel()});$('spotList').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este setal?')){spots.splice(+b.dataset.delete,1);persist();renderMap();renderSpots()}})}function exportGpx(){if(!spots.length)return alert('No hay setales');const xml=s=>String(s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));const body=spots.map(s=>`<wpt lat="${+s.lat}" lon="${+s.lon}"><name>${xml(s.name)}</name></wpt>`).join('');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([`<?xml version="1.0" encoding="UTF-8"?><gpx version="1.1" creator="VeraSetas" xmlns="http://www.topografix.com/GPX/1/1">${body}</gpx>`],{type:'application/gpx+xml'}));a.download='verasetas-setales.gpx';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
 function stopGeo(){if(watchId!==null)navigator.geolocation.clearWatch(watchId);watchId=null;following=false;if(geoMarker)map.removeLayer(geoMarker);if(geoAccuracy)map.removeLayer(geoAccuracy);geoMarker=geoAccuracy=null;$('locate').classList.remove('active')}$('locate').onclick=()=>{if(watchId!==null){if(!following){following=true;if(geoMarker)map.setView(geoMarker.getLatLng(),Math.max(map.getZoom(),14));$('locate').classList.add('active')}else stopGeo();return}if(!navigator.geolocation)return alert('Geolocalización no disponible');following=true;$('locate').classList.add('active');watchId=navigator.geolocation.watchPosition(p=>{let ll=[p.coords.latitude,p.coords.longitude];if(!geoMarker){geoMarker=L.circleMarker(ll,{radius:8,color:'#fff',weight:3,fillColor:'#318cf0',fillOpacity:1}).addTo(map);geoAccuracy=L.circle(ll,{radius:p.coords.accuracy,color:'#318cf0',fillOpacity:.08,weight:1}).addTo(map)}else{geoMarker.setLatLng(ll);geoAccuracy.setLatLng(ll).setRadius(p.coords.accuracy)}if(following)map.setView(ll,Math.max(map.getZoom(),14))},e=>{stopGeo();alert('No se pudo acceder a la ubicación. Requiere permiso y HTTPS.')},{enableHighAccuracy:true,maximumAge:10000})};
@@ -885,7 +910,7 @@ if(location.protocol!=='file:')loadProcessedSources();
  document.addEventListener('click',async e=>{
   if(e.target?.id!=='vsForestPred')return;
   const btn=e.target;btn.disabled=true;btn.textContent='🌳 Consultando bosques…';
-  try{await loadForests();gridDraw();const status=document.getElementById('vsForestPredStatus');if(status)status.textContent=forestStatus+' · Índice recalculado. Solo se evalúan los bosques cargados.'}
+  try{const loaded=await loadForests();if(loaded&&typeof gridDraw==='function')gridDraw()}catch(err){console.error('Bosques OSM',err);const status=document.getElementById('vsForestPredStatus');if(status)status.textContent='❌ Error al procesar bosques: '+String(err.message||err)}
   finally{btn.disabled=false;btn.textContent='🌳 Cruzar con bosques OSM visibles'}
  });
  const oldShow=showGridDetail;
@@ -1150,9 +1175,9 @@ if(location.protocol!=='file:')loadProcessedSources();
  if(typeof gridDraw!=='function'||typeof gridCells==='undefined'||typeof gridLayer==='undefined')return;
  let divisions=2;
  const control=document.createElement('div');control.id='vsGridSize';
- control.style.cssText='position:relative;display:block;flex-shrink:0;background:#17382d;color:white;padding:12px;border:1px solid #8caf9d;border-radius:9px;margin:10px 0;font:14px system-ui;width:100%;box-sizing:border-box';
+ control.style.cssText='position:absolute;z-index:800;top:114px;right:10px;background:#17382deF;color:white;padding:7px 9px;border-radius:9px;box-shadow:0 2px 9px #0005;font:12px system-ui;max-width:155px';
  control.innerHTML='<label for="vsGridSizeSelect" style="display:block;margin-bottom:3px">Tamaño visual de casillas</label><select id="vsGridSizeSelect" style="width:100%;padding:5px;background:white;color:#17382d;border-radius:5px"><option value="1">Original (~8–12 km)</option><option value="2" selected>Mitad (~4–6 km)</option><option value="4">Cuarto (~2–3 km)</option></select><small style="display:block;margin-top:4px;line-height:1.3">Mismos datos regionales; no mayor precisión.</small>';
- const panel=document.getElementById('panel'),body=document.getElementById('panelBody');if(!panel||!body)return;panel.insertBefore(control,body);
+ const wrap=document.getElementById('mapWrap');if(!wrap)return;wrap.appendChild(control);
  control.querySelector('select').onchange=e=>{divisions=Number(e.target.value);gridDraw()};
  const oldDraw=gridDraw;
  gridDraw=function(){
@@ -1226,7 +1251,7 @@ if(location.protocol!=='file:')loadProcessedSources();
 .vs-sp-line{padding:3px 0;display:flex;align-items:center;gap:4px}
 </style>
 <script>
-/* VeraSetas 3.9: different colors per identified plant species, not just per forest group. */
+/* VeraSetas 3.9.3: different colors per identified plant species, not just per forest group. */
 (function(){
  if(typeof FLORA_GROUPS==='undefined'||typeof forestLayer==='undefined')return;
  const palette={
@@ -1251,53 +1276,6 @@ if(location.protocol!=='file:')loadProcessedSources();
  const priorPanel=renderPanel;renderPanel=function(){priorPanel();if(tab!=='flora')return;const panel=document.getElementById('floraGroups');if(panel)panel.addEventListener('change',()=>setTimeout(update,0));update()};
  const priorMap=renderMap;renderMap=function(){priorMap();update()};
  update();
-})();
-</script>
-
-<script>
-/* v3.9.2: OSM forest query with visible progress, zoom guidance, endpoint fallback. */
-(function(){
- if(typeof map==='undefined'||typeof gridDraw!=='function')return;
- const servers=['https://overpass.kumi.systems/api/interpreter','https://overpass-api.de/api/interpreter','https://overpass.nchc.org.tw/api/interpreter'];
- let running=false;
- function report(msg){forestStatus=msg;for(const id of ['vsForestPredStatus','forestStatus']){const el=document.getElementById(id);if(el)el.textContent=msg}}
- function timeoutSignal(ms){const c=new AbortController();const timer=setTimeout(()=>c.abort(),ms);return {signal:c.signal,stop:()=>clearTimeout(timer)}}
- async function queryForest(){
-   const b=map.getBounds(),zoom=map.getZoom();
-   if(zoom<11){report('⚠️ Mapa demasiado alejado (zoom '+zoom+'). Acerca hasta zoom 11 o más y vuelve a pulsar.');return false}
-   const bounds=[b.getSouth(),b.getWest(),b.getNorth(),b.getEast()].map(n=>n.toFixed(5)).join(',');
-   const q='[out:json][timeout:25];(way["landuse"="forest"]('+bounds+');way["natural"="wood"]('+bounds+'););out geom;';
-   let response=null,lastError=null;
-   for(let i=0;i<servers.length;i++){
-     report('🌳 Consultando bosques OSM… servidor '+(i+1)+' de '+servers.length);
-     const t=timeoutSignal(18000);
-     try{const r=await fetch(servers[i],{method:'POST',body:new URLSearchParams({data:q}),signal:t.signal});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!Array.isArray(data.elements))throw Error('Respuesta sin elementos');response=data;break}catch(e){lastError=e;console.warn('VeraSetas OSM',servers[i],e)}finally{t.stop()}
-   }
-   if(!response){report('❌ No se pudo conectar con los servidores de bosques OSM. Reintenta más tarde. '+(lastError?.message||''));return false}
-   const features=[];
-   for(const el of response.elements){
-     if(features.length>=2500)break;
-     const coords=el.geometry;
-     if(!Array.isArray(coords)||coords.length<4)continue;
-     if(coords[0].lat!==coords[coords.length-1].lat||coords[0].lon!==coords[coords.length-1].lon)continue;
-     const tags=el.tags||{};
-     features.push({type:'Feature',properties:{kind:forestKind(tags),detail:Object.entries(tags).filter(([k])=>['species','genus','name','leaf_type','landuse','natural'].includes(k)).map(([k,v])=>k+': '+v).join(' · ')||'Sin identificación de especie'},geometry:{type:'Polygon',coordinates:[coords.map(c=>[c.lon,c.lat])]}});
-   }
-   forestData={type:'FeatureCollection',features};
-   report('✅ '+features.length+' polígonos forestales cargados. '+(features.length?'Índice recalculado.':'No hay polígonos cerrados en esta vista; prueba otra zona.'));
-   if(typeof renderForests==='function')renderForests();
-   gridDraw();
-   return true;
- }
- document.addEventListener('click',async e=>{
-   const btn=e.target?.closest?.('#vsForestPred');
-   if(!btn)return;
-   e.stopImmediatePropagation();e.preventDefault();
-   if(running)return;
-   running=true;btn.disabled=true;btn.textContent='🌳 Consultando bosques…';
-   report('🌳 Botón activado. Comprobando zoom…');
-   try{await queryForest()}catch(err){report('❌ Error al procesar bosques: '+(err?.message||'desconocido'));console.error(err)}finally{running=false;btn.disabled=false;btn.textContent='🌳 Cruzar con bosques OSM visibles'}
- },true);
 })();
 </script>
 </body></html>
